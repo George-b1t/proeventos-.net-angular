@@ -19,6 +19,7 @@ public class Startup
         services.AddDbContext<DataContext>(
             context => context.UseSqlite(Configuration.GetConnectionString("Default"))
         );
+        services.AddCors();
         services.AddControllers();
         services.AddSwaggerGen(c =>
         {
@@ -41,6 +42,10 @@ public class Startup
         app.UseRouting();
 
         app.UseAuthorization();
+
+        app.UseCors(cors => cors.AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .AllowAnyOrigin());
 
         app.UseEndpoints(endpoints =>
         {
